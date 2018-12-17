@@ -7,17 +7,26 @@ public class TriangledGrid : MonoBehaviour
 	public int GridX = 3;
 	public int GridY = 3;
 	public Color MasterColor = new Color(1f, 0.83f, 0f);
-	public Color CurrentColor;
+
+	public Color CornerA = Color.blue;
+	public Color CornerB = Color.red;
+	public Color CornerC = Color.green;
+
+
+	public Color CurrentColor = Color.white;
+	
 	public float ColorMultiplier = 3f;
 
 	public float RandomRangeDown = 1f;
 	public float RandomRangeUP = 1f;
 	public float RandomRangeZUP = 1f;
 	public float RandomRangeZDown = 1f;
+
 	
 	void Start()
 	{
-		var mm = 1 + (ColorMultiplier / 1000f);
+
+	
 
 		var triangles = new List<int>();
 		var vertices = new List<Vector3>();
@@ -25,8 +34,6 @@ public class TriangledGrid : MonoBehaviour
 		var vCounter = 0;
 
 		var vPositions = new Vector3[GridX, GridY];
-
-		CurrentColor = MasterColor;
 
 		for (int i = 0; i < GridX; i++)
 		{
@@ -54,10 +61,14 @@ public class TriangledGrid : MonoBehaviour
 				vertices.Add(p3);
 				vertices.Add(p2);
 
-				CurrentColor = new Color(
-					Mathf.Clamp((CurrentColor.r * mm)  , 0, 1f),
-					Mathf.Clamp((CurrentColor.g * mm)  , 0, 1f),
-					Mathf.Clamp((CurrentColor.b * mm)  , 0, 1f));
+				var r1 = Mathf.Lerp(MasterColor.r, CornerB.r, (2f * i) / (3f * GridX));
+				var r2 = Mathf.Lerp(MasterColor.r, CornerA.r, (2f * j) / (3f * GridY));
+				var g1 = Mathf.Lerp(MasterColor.g, CornerB.g, (2f * i) / (3f * GridX));
+				var g2 = Mathf.Lerp(MasterColor.g, CornerA.g, (2f * j) / (3f * GridY));
+				var b1 = Mathf.Lerp(MasterColor.b, CornerB.b, (2f * i) / (3f * GridX));
+				var b2 = Mathf.Lerp(MasterColor.b, CornerA.b, (2f * j) / (3f * GridY));
+
+				CurrentColor = new Color(r1 + r2 / 2f, g1 + g2 / 2f, b1 + b2 / 2f, 1.0f);
 
 				colors.Add(CurrentColor);
 				colors.Add(CurrentColor);
@@ -72,10 +83,14 @@ public class TriangledGrid : MonoBehaviour
 				vertices.Add(p2);
 				vertices.Add(p1);
 
-				CurrentColor = new Color(
-					Mathf.Clamp((CurrentColor.r * mm) , 0, 1f),
-					Mathf.Clamp((CurrentColor.g * mm) , 0, 1f),
-					Mathf.Clamp((CurrentColor.b * mm) , 0, 1f));
+				r1 = Mathf.Lerp(MasterColor.r, CornerB.r, (2f * i + 1f) / (3f * GridX));
+				r2 = Mathf.Lerp(MasterColor.r, CornerA.r, (2f * j + 1f) / (3f * GridY));
+				g1 = Mathf.Lerp(MasterColor.g, CornerB.g, (2f * i + 1f) / (3f * GridX));
+				g2 = Mathf.Lerp(MasterColor.g, CornerA.g, (2f * j + 1f) / (3f * GridY));
+				b1 = Mathf.Lerp(MasterColor.b, CornerB.b, (2f * i + 1f) / (3f * GridX));
+				b2 = Mathf.Lerp(MasterColor.b, CornerA.b, (2f * j + 1f) / (3f * GridY));
+
+				CurrentColor = new Color(r1 + r2 / 2f, g1 + g2 / 2f, b1 + b2 / 2f, 1.0f);
 
 				colors.Add(CurrentColor);
 				colors.Add(CurrentColor);
